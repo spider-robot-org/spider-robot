@@ -4,7 +4,7 @@ public record TelegramMessageDTO(
         MessageDTO message
 ) {
   public record MessageDTO(
-          int message_id,
+          Long message_id,
           FromDTO from,
           ChatDTO chat,
           long date,
@@ -13,7 +13,7 @@ public record TelegramMessageDTO(
   }
 
   public record FromDTO(
-          int id,
+          Long id,
           boolean is_bot,
           String first_name,
           String last_name,
@@ -28,7 +28,7 @@ public record TelegramMessageDTO(
   }
 
   public record ChatDTO(
-          int id,
+          Long id,
           String first_name,
           String username,
           String type

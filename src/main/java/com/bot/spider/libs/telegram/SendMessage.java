@@ -4,9 +4,9 @@ import com.bot.spider.interfaces.TelegramApiMethod;
 import com.bot.spider.services.HttpClientService;
 
 public class SendMessage implements TelegramApiMethod {
-  private int chatId;
+  private Long chatId;
 
-  public  SendMessage(int chatId) {
+  public  SendMessage(Long chatId) {
     this.chatId = chatId;
   }
   @Override

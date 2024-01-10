@@ -15,7 +15,7 @@ public class SendHello {
     this.httpClientService = httpClientService;
   }
 
-  public void execute(int chatId) {
+  public void execute(Long chatId) {
     SendMessage sendMessage = new SendMessage(chatId);
     sendMessage.execute(httpClientService);
   }
