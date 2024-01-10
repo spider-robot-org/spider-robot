@@ -17,35 +17,34 @@ import java.util.logging.Logger;
 
 @RestController
 public class TelegramBotController {
-  private final HttpClientService httpClientService;
-  Logger logger = Logger.getLogger(getClass().getName());
+    private final HttpClientService httpClientService;
+    Logger logger = Logger.getLogger(getClass().getName());
 
-  @Autowired
-  public TelegramBotController(HttpClientService httpClientService) {
-    this.httpClientService = httpClientService;
-  }
-
-  @PostMapping("${telegram.bot.webhook-path}")
-  public ResponseEntity<String> webhook(@RequestBody TelegramMessageDTO body) {
-    logger.info(String.valueOf(body));
-
-    assert body.message() != null;
-    Long chatId = body.message().chat().id();
-    String text = body.message().text();
-
-    try {
-      SendHello sendHello = new SendHello(httpClientService);
-      sendHello.execute(chatId);
-      return new ResponseEntity<>("ok", HttpStatus.OK);
+    @Autowired
+    public TelegramBotController(HttpClientService httpClientService) {
+        this.httpClientService = httpClientService;
     }
-    catch (Exception e){
-      logger.log(Level.SEVERE, "Error sending message to chatId: " + chatId);
-      return new ResponseEntity<>("error", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
 
-  @RequestMapping("/")
-  public String index() {
-    return "Greetings from Spring Boot!";
-  }
+    @PostMapping("${telegram.bot.webhook-path}")
+    public ResponseEntity<String> webhook(@RequestBody TelegramMessageDTO body) {
+        logger.info(String.valueOf(body));
+
+        assert body.message() != null;
+        Long chatId = body.message().chat().id();
+        String text = body.message().text();
+
+        try {
+            SendHello sendHello = new SendHello(httpClientService);
+            sendHello.execute(chatId);
+            return new ResponseEntity<>("ok", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error sending message to chatId: " + chatId);
+            return new ResponseEntity<>("error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping("/")
+    public String index() {
+        return "Greetings from Spring Boot!";
+    }
 }
