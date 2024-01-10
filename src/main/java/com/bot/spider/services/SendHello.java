@@ -1,14 +1,13 @@
 package com.bot.spider.services;
 
+import com.bot.spider.libs.telegram.SendMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import  com.bot.spider.libs.telegram.SendMessage;
 
 @Service
 public class SendHello {
 
-  private HttpClientService  httpClientService;
+  private final HttpClientService httpClientService;
 
   @Autowired
   public  SendHello(HttpClientService httpClientService) {
