@@ -1,6 +1,6 @@
 package com.bot.spider.services;
 
-import com.bot.spider.libs.telegram.SendMessage;
+import com.bot.spider.libs.telegram.TelegramApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,9 @@ public class SendHello {
   }
 
   public void execute(Long chatId) {
-    SendMessage sendMessage = new SendMessage(chatId);
-    sendMessage.execute(httpClientService);
+    TelegramApi telegramApi = new TelegramApi(httpClientService);
+    String jsonBody = String.format("{\"chat_id\":\"%s\",\"text\":\"Olá! Esta é uma resposta do bot.\"}", chatId);
+
+    telegramApi.sendMessage(jsonBody);
   }
 }
