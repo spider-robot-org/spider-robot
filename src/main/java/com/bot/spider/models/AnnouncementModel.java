@@ -35,7 +35,6 @@ public class AnnouncementModel {
     @Column(name = "payment_value")
     private BigDecimal paymentValue;
 
-    @Column()
     private CatalogStatus status;
 
     @Column(name = "created_at")

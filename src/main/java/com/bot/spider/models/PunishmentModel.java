@@ -23,7 +23,6 @@ public class PunishmentModel {
     @JoinColumn(name = "fk_user_id")
     private UserModel user;
 
-    @Column()
     private String reason;
 
     @Column(name = "suspension_expiry_date")

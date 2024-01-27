@@ -19,10 +19,8 @@ public class UserModel {
     @Id
     private Long id;
 
-    @Column()
     private String username;
 
-    @Column()
     private Role role;
 
     @Column(name = "first_name")
@@ -31,7 +29,6 @@ public class UserModel {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column()
     private UserStatus status;
 
     @Column(name = "created_at")

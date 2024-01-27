@@ -23,7 +23,6 @@ public class CatalogModel {
     @Id
     private Long id;
 
-    @Column()
     private String name;
 
     @Column(name = "monthly_fee")
