@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@Entity()
+@Entity(name = "announcement")
 @Table(name = "announcement")
 @AllArgsConstructor
 @NoArgsConstructor

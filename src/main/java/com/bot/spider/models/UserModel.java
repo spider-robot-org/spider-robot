@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@Entity()
-@Table(name = "\"user\"")
+@Entity(name = "user")
+@Table(name = "user")
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserModel {
