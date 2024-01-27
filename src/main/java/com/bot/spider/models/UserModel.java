@@ -8,13 +8,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity()
 @Table(name = "\"user\"")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserModel {
     @Id
     private Long id;
@@ -36,20 +40,6 @@ public class UserModel {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    public UserModel(Long id, String username, Role role, String firstName, String lastName, UserStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.username = username;
-        this.role = role;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public UserModel() {
-    }
 
     @PrePersist
     protected void onCreate() {

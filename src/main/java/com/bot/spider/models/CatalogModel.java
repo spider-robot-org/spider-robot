@@ -10,7 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,6 +21,8 @@ import java.util.List;
 @Data
 @Entity()
 @Table(name = "catalog")
+@AllArgsConstructor
+@NoArgsConstructor
 public class CatalogModel {
     @Id
     private Long id;
@@ -37,15 +41,6 @@ public class CatalogModel {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    public CatalogModel(Long id, String name, BigDecimal monthlyFee, List<ActivationType> accessAllowed) {
-        this.name = name;
-        this.monthlyFee = monthlyFee;
-        this.accessAllowed = accessAllowed;
-    }
-
-    public CatalogModel() {
-    }
 
     @PrePersist
     protected void onCreate() {

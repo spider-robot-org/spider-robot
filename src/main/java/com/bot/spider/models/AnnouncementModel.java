@@ -9,7 +9,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,6 +19,8 @@ import java.time.LocalDateTime;
 @Data
 @Entity()
 @Table(name = "announcement")
+@AllArgsConstructor
+@NoArgsConstructor
 public class AnnouncementModel {
     @Id
     private Long id;
@@ -42,16 +46,6 @@ public class AnnouncementModel {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    public AnnouncementModel(Long id, UserModel user, CatalogModel service, String messageId, BigDecimal paymentValue) {
-        this.user = user;
-        this.service = service;
-        this.messageId = messageId;
-        this.paymentValue = paymentValue;
-    }
-
-    public AnnouncementModel() {
-    }
 
     @PrePersist
     protected void onCreate() {

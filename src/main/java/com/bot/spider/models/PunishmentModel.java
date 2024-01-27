@@ -8,13 +8,17 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity()
 @Table(name = "punishment")
+@AllArgsConstructor
+@NoArgsConstructor
 public class PunishmentModel {
     @Id
     private Long id;
@@ -33,15 +37,6 @@ public class PunishmentModel {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    public PunishmentModel(Long id, UserModel user, String reason, LocalDateTime suspensionExpiryDate) {
-        this.user = user;
-        this.reason = reason;
-        this.suspensionExpiryDate = suspensionExpiryDate;
-    }
-
-    public PunishmentModel() {
-    }
 
     @PrePersist
     protected void onCreate() {
