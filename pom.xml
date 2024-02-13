@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.bot</groupId>
 	<artifactId>spider</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>spider</name>
 	<description>Telegram Bot for sharing streaming costs.</description>
 	<properties>
