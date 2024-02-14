@@ -28,7 +28,6 @@ public class TelegramBotController {
 
     @PostMapping("${telegram.bot.webhook-path}")
     public ResponseEntity<String> webhook(@RequestBody TelegramMessageDTO body) {
-        logger.info(String.valueOf(body));
 
         try {
             HandlingInputs handlingInputs = new HandlingInputs(body, httpClientService);
