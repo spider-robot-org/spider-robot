@@ -2,10 +2,16 @@ package com.bot.spider.services.InputProcess;
 
 import com.bot.spider.dtos.TelegramMessageDTO;
 import com.bot.spider.enums.TelegramChatAction;
+import com.bot.spider.libs.keyboard.CreateKeyboard;
+import com.bot.spider.libs.keyboard.InlineKeyboard;
+import com.bot.spider.libs.keyboard.KeyboardList;
 import com.bot.spider.services.HttpClientService;
 import com.bot.spider.services.TelegramSenders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class ExampleHandlingInputs {
@@ -31,6 +37,24 @@ public class ExampleHandlingInputs {
 
     if (text.equals("/typing")) {
       telegramSenders.sendChatAction(chatId, TelegramChatAction.UPLOAD_AUDIO);
+    }
+
+    if(text.equals(("/keyboard"))){
+      String messageText = "Escolha uma opção";
+      InlineKeyboard button1 = new InlineKeyboard("Texto 1", "one_piece_confirm");
+      InlineKeyboard button3 = new InlineKeyboard("Texto 3","one_piece_confirm2");
+      InlineKeyboard button2 = new InlineKeyboard("Texto 2", "one_piece_not_confirm");
+
+
+      List<List<InlineKeyboard>> inlineKeyboard = Arrays.asList(
+              Arrays.asList(button1,button3),
+              Arrays.asList(button2)
+      );
+      KeyboardList keyboardList = new KeyboardList(inlineKeyboard);
+
+      String json = CreateKeyboard.newKeyboard(chatId, messageText, keyboardList);
+      System.out.println(json);
+      telegramSenders.sendKeyboard(json);
     }
 
   }

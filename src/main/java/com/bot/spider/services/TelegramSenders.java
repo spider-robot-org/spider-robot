@@ -30,4 +30,8 @@ public class TelegramSenders {
     telegramApi.sendVideo(chatId, videoUrl);
   }
 
+  public void sendKeyboard(String jsonBody) {
+    telegramApi.sendMessage(jsonBody);
+  }
+
 }
