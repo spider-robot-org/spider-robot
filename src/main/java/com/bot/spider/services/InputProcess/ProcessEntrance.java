@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProcessEntrance {
   private final ExampleHandlingInputs exampleHandlingInputs;
+  private final ExampleButtonInput exampleButtonInput;
 
   @Autowired
-  public ProcessEntrance(ExampleHandlingInputs exampleHandlingInputs) {
+  public ProcessEntrance(ExampleHandlingInputs exampleHandlingInputs, ExampleButtonInput exampleButtonInput) {
     this.exampleHandlingInputs = exampleHandlingInputs;
+    this.exampleButtonInput = exampleButtonInput;
   }
 
   public void process(TelegramMessageDTO body) {
@@ -22,8 +24,7 @@ public class ProcessEntrance {
       exampleHandlingInputs.handle(body);
 
     } else if (body.callback_query().isPresent()) {
-      //tratamento de callback
-      System.out.println("got callback");
+      exampleButtonInput.handle(body);
     }
   }
 }

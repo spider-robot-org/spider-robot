@@ -53,7 +53,6 @@ public class ExampleHandlingInputs {
       KeyboardList keyboardList = new KeyboardList(inlineKeyboard);
 
       String json = CreateKeyboard.newKeyboard(chatId, messageText, keyboardList);
-      System.out.println(json);
       telegramSenders.sendKeyboard(json);
     }
 
