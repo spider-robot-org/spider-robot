@@ -3,10 +3,13 @@ package com.bot.spider.libs.keyboard;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CreateKeyboard {
-  public static String newKeyboard(Long chatId, String messageText, KeyboardList createKeyboard) {
-    Message message = new Message(chatId,messageText, createKeyboard);
+  public static String newKeyboard(Long chatId, String messageText, List<List<InlineKeyboard>> inlineKeyboard) {
+
+    KeyboardList keyboardList = new KeyboardList(inlineKeyboard);
+    Message message = new Message(chatId,messageText, keyboardList);
 
     try {
       ObjectMapper objectMapper = new ObjectMapper();

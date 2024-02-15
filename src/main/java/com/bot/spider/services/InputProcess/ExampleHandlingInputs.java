@@ -4,7 +4,6 @@ import com.bot.spider.dtos.TelegramMessageDTO;
 import com.bot.spider.enums.TelegramChatAction;
 import com.bot.spider.libs.keyboard.CreateKeyboard;
 import com.bot.spider.libs.keyboard.InlineKeyboard;
-import com.bot.spider.libs.keyboard.KeyboardList;
 import com.bot.spider.services.HttpClientService;
 import com.bot.spider.services.TelegramSenders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class ExampleHandlingInputs {
   private final HttpClientService httpClientService;
 
   @Autowired
-  public ExampleHandlingInputs( HttpClientService httpClientService) {
+  public ExampleHandlingInputs(HttpClientService httpClientService) {
     this.httpClientService = httpClientService;
   }
 
@@ -39,23 +38,20 @@ public class ExampleHandlingInputs {
       telegramSenders.sendChatAction(chatId, TelegramChatAction.UPLOAD_AUDIO);
     }
 
-    if(text.equals(("/keyboard"))){
+    if (text.equals(("/keyboard"))) {
       String messageText = "Escolha uma opção";
       InlineKeyboard button1 = new InlineKeyboard("Texto 1", "one_piece_confirm");
-      InlineKeyboard button3 = new InlineKeyboard("Texto 3","one_piece_confirm2");
+      InlineKeyboard button3 = new InlineKeyboard("Texto 3", "one_piece_confirm2");
       InlineKeyboard button2 = new InlineKeyboard("Texto 2", "one_piece_not_confirm");
 
+      List<InlineKeyboard> row1 = Arrays.asList(button1, button3);
+      List<InlineKeyboard> row2 = List.of(button2);
 
-      List<List<InlineKeyboard>> inlineKeyboard = Arrays.asList(
-              Arrays.asList(button1,button3),
-              Arrays.asList(button2)
-      );
-      KeyboardList keyboardList = new KeyboardList(inlineKeyboard);
+      List<List<InlineKeyboard>> inlineKeyboard = Arrays.asList(row1, row2);
 
-      String json = CreateKeyboard.newKeyboard(chatId, messageText, keyboardList);
+      String json = CreateKeyboard.newKeyboard(chatId, messageText, inlineKeyboard);
       telegramSenders.sendKeyboard(json);
     }
-
   }
 
 }
