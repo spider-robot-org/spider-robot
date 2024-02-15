@@ -1,14 +1,18 @@
 package com.bot.spider.dtos;
 
+import java.util.List;
+import java.util.Optional;
+
 public record TelegramMessageDTO(
-        MessageDTO message
+        Optional<CallbackQueryDTO> callback_query,
+        Optional<MessageDTO> message
 ) {
-    public record MessageDTO(
-            Long message_id,
+    public record CallbackQueryDTO(
+            String id,
             FromDTO from,
-            ChatDTO chat,
-            long date,
-            String text
+            MessageDTO message,
+            String chat_instance,
+            String data
     ) {
     }
 
@@ -16,14 +20,18 @@ public record TelegramMessageDTO(
             Long id,
             boolean is_bot,
             String first_name,
-            String last_name,
             String username,
-            String language_code,
-            boolean is_premium,
-            boolean added_to_attachment_menu,
-            boolean can_join_groups,
-            boolean can_read_all_group_messages,
-            boolean supports_inline_queries
+            String language_code
+    ) {
+    }
+
+    public record MessageDTO(
+            Long message_id,
+            Optional<FromDTO> from,
+            Optional<ChatDTO> chat,
+            long date,
+            String text,
+            Optional<ReplyMarkupDTO> reply_markup
     ) {
     }
 
@@ -32,6 +40,17 @@ public record TelegramMessageDTO(
             String first_name,
             String username,
             String type
+    ) {
+    }
+
+    public record ReplyMarkupDTO(
+            List<List<InlineKeyboardButtonDTO>> inline_keyboard
+    ) {
+    }
+
+    public record InlineKeyboardButtonDTO(
+            String text,
+            String callback_data
     ) {
     }
 }

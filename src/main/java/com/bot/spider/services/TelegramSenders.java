@@ -30,4 +30,13 @@ public class TelegramSenders {
     telegramApi.sendVideo(chatId, videoUrl);
   }
 
+  public void sendKeyboard(String jsonBody) {
+    telegramApi.sendMessage(jsonBody);
+  }
+
+  public void sendAnyMessage(String text, Long chatId) {
+    String jsonBody = String.format("{\"chat_id\":\"%s\",\"text\":\"%s\"}", chatId, text);
+    telegramApi.sendMessage(jsonBody);
+  }
+
 }

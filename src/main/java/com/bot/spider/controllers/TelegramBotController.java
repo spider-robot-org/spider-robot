@@ -3,36 +3,30 @@ package com.bot.spider.controllers;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.bot.spider.services.InputProcess.ProcessEntrance;
+import com.bot.spider.services.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.bot.spider.dtos.TelegramMessageDTO;
-import com.bot.spider.services.HandlingInputs;
-import com.bot.spider.services.HttpClientService;
-
 
 @RestController
 public class TelegramBotController {
-    private final HttpClientService httpClientService;
     Logger logger = Logger.getLogger(getClass().getName());
 
     @Autowired
-    public TelegramBotController(HttpClientService httpClientService) {
-        this.httpClientService = httpClientService;
-    }
+    private TokenService tokenService;
+    @Autowired
+    private ProcessEntrance processEntrance;
 
     @PostMapping("${telegram.bot.webhook-path}")
-    public ResponseEntity<String> webhook(@RequestBody TelegramMessageDTO body) {
-        logger.info(String.valueOf(body));
-
+    public ResponseEntity<String> webhook(@RequestHeader(value= "X-Telegram-Bot-Api-Secret-Token") String token , @RequestBody TelegramMessageDTO body) {
         try {
-            HandlingInputs handlingInputs = new HandlingInputs(body, httpClientService);
-            handlingInputs.handle();
+
+            tokenService.validateToken(token);
+            processEntrance.process(body);
 
             return new ResponseEntity<>("ok", HttpStatus.OK);
         } catch (Exception e) {
@@ -43,6 +37,6 @@ public class TelegramBotController {
 
     @RequestMapping("/")
     public String index() {
-        return "Greetings from Spring Boot!";
+        return "Application is alive!";
     }
 }
