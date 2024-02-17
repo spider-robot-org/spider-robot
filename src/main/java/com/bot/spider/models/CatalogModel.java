@@ -31,7 +31,8 @@ public class CatalogModel {
 
     private String name;
 
-    private BigDecimal subscription;
+	 @Column(name = "subscription_price")
+    private BigDecimal subscriptionPrice;
 
 	 @Column(name = "max_slot")
 	 private Integer maxSlot;
