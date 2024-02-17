@@ -31,8 +31,11 @@ public class CatalogModel {
 
     private String name;
 
-    @Column(name = "monthly_fee")
-    private BigDecimal monthlyFee;
+	 @Column(name = "subscription_price")
+    private BigDecimal subscriptionPrice;
+
+	 @Column(name = "max_slot")
+	 private Integer maxSlot;
 
     @ElementCollection(targetClass = String.class)
     @Enumerated(EnumType.STRING)
