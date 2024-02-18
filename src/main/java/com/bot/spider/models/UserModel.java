@@ -1,10 +1,7 @@
 package com.bot.spider.models;
 
-import java.time.LocalDateTime;
-
 import com.bot.spider.enums.Role;
 import com.bot.spider.enums.UserStatus;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +12,8 @@ import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @Entity(name = "\"user\"")
@@ -36,6 +35,12 @@ public class UserModel {
     private String lastName;
 
     private UserStatus status;
+
+    @Column(name = "accepted_terms_of_use")
+    private boolean acceptedTermsOfUse = false;
+
+    @Column(name = "accepted_privacy_policy")
+    private boolean acceptedPrivacyPolicy = false;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
