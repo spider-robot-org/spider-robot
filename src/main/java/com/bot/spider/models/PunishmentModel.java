@@ -33,6 +33,9 @@ public class PunishmentModel {
     @Column(name = "suspension_expiry_date")
     private LocalDateTime suspensionExpiryDate;
 
+    @Column(name = "warning_given")
+    private boolean warningGiven;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
