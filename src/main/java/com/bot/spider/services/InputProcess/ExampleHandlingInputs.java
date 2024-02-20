@@ -3,7 +3,9 @@ package com.bot.spider.services.InputProcess;
 import com.bot.spider.dtos.TelegramMessageDTO;
 import com.bot.spider.enums.TelegramChatAction;
 import com.bot.spider.libs.keyboard.CreateKeyboard;
+import com.bot.spider.libs.keyboard.InlineKeyboard;
 import com.bot.spider.libs.keyboard.InlineKeyboardButton;
+import com.bot.spider.libs.keyboard.InlineKeyboardRow;
 import com.bot.spider.services.HttpClientService;
 import com.bot.spider.services.TelegramSenders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +46,10 @@ public class ExampleHandlingInputs {
       InlineKeyboardButton button3 = new InlineKeyboardButton("Texto 3", "one_piece_confirm2");
       InlineKeyboardButton button2 = new InlineKeyboardButton("Texto 2", "one_piece_not_confirm");
 
-      List<InlineKeyboardButton> row1 = Arrays.asList(button1, button3);
-      List<InlineKeyboardButton> row2 = List.of(button2);
+      InlineKeyboardRow row1 = new InlineKeyboardRow(List.of(button1, button3));
+      InlineKeyboardRow row2 = new InlineKeyboardRow(List.of(button2));
 
-      List<List<InlineKeyboardButton>> inlineKeyboard = Arrays.asList(row1, row2);
+      InlineKeyboard inlineKeyboard = new InlineKeyboard(Arrays.asList(row1, row2));
 
       String json = CreateKeyboard.newKeyboard(chatId, messageText, inlineKeyboard);
       telegramSenders.sendKeyboard(json);

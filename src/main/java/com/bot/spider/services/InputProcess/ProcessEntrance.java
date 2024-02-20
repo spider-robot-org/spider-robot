@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class ProcessEntrance {
-	private final ExampleHandlingInputs exampleHandlingInputs;
 	private final ExampleButtonInput exampleButtonInput;
 	private final HandlingInputs handlingInputs;
 
@@ -20,7 +19,6 @@ public class ProcessEntrance {
 
 		if (message.isPresent()) {
 			handlingInputs.handle(new HandlingInputsDTO(body));
-			exampleHandlingInputs.handle(body);
 
 		} else if (callbackQuery.isPresent()) {
 			exampleButtonInput.handle(body);
