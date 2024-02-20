@@ -1,0 +1,12 @@
+#!/bin/sh
+
+COMMIT_MSG_FILE=$1
+
+# Check if the commit message follows conventional commits pattern
+if ! grep -Eq "^(feat|fix|docs|style|refactor|perf|test|chore)(\([a-zA-Z0-9-]+\))?: .{1,}" "$COMMIT_MSG_FILE"; then
+    echo "ERROR: Your commit message does not follow the conventional commits pattern!"
+    echo "Please use a valid commit type (e.g., feat, fix, docs) followed by an optional scope and a message."
+    echo "Example without scope: feat: add new feature"
+    echo "Example with scope: feat(auth): add login functionality"
+    exit 1
+fi
