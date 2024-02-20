@@ -1,12 +1,11 @@
 package com.bot.spider.libs.keyboard;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
-import java.util.List;
-
 public class CreateKeyboard {
-  public static String newKeyboard(Long chatId, String messageText, List<List<InlineKeyboardButton>> inlineKeyboard) {
+  public static String newKeyboard(Long chatId, String messageText, InlineKeyboard inlineKeyboard) {
 
     KeyboardList keyboardList = new KeyboardList(inlineKeyboard);
     Message message = new Message(chatId,messageText, keyboardList);

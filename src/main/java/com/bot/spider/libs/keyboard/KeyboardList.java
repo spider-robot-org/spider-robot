@@ -5,15 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 public class KeyboardList {
-  private final List<List<InlineKeyboardButton>> inline_keyboard;
+  private final InlineKeyboard inline_keyboard;
 
   @JsonCreator
-  public KeyboardList(@JsonProperty("inline_keyboard") List<List<InlineKeyboardButton>> inlineKeyboard) {
+  public KeyboardList(@JsonProperty("inline_keyboard") InlineKeyboard inlineKeyboard) {
     this.inline_keyboard = inlineKeyboard;
   }
 }
