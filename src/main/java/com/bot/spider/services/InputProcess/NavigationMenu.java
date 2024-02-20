@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bot.spider.dtos.NavigationMenuDTO;
 import com.bot.spider.libs.keyboard.CreateKeyboard;
-import com.bot.spider.libs.keyboard.InlineKeyboard;
+import com.bot.spider.libs.keyboard.InlineKeyboardButton;
 
 import lombok.AllArgsConstructor;
 
@@ -20,11 +20,11 @@ public class NavigationMenu {
 		String username = dto.username();
 		String messageText = "Olá " + username;
 
-		InlineKeyboard button = new InlineKeyboard("Texto 1", "opt1");
-		InlineKeyboard button2 = new InlineKeyboard("Texto 2", "opt2");
+		InlineKeyboardButton button = new InlineKeyboardButton("Texto 1", "opt1");
+		InlineKeyboardButton button2 = new InlineKeyboardButton("Texto 2", "opt2");
 
-		List<InlineKeyboard> row1 = Arrays.asList(button, button2);
-		List<List<InlineKeyboard>> inlineKeyboard = Arrays.asList(row1);
+		List<InlineKeyboardButton> row1 = Arrays.asList(button, button2);
+		List<List<InlineKeyboardButton>> inlineKeyboard = Arrays.asList(row1);
 
 		String json = CreateKeyboard.newKeyboard(chatId, messageText, inlineKeyboard);
 		return json;		

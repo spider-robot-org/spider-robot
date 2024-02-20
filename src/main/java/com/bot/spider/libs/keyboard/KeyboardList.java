@@ -10,10 +10,10 @@ import java.util.List;
 @Getter
 @Setter
 public class KeyboardList {
-  private final List<List<InlineKeyboard>> inline_keyboard;
+  private final List<List<InlineKeyboardButton>> inline_keyboard;
 
   @JsonCreator
-  public KeyboardList(@JsonProperty("inline_keyboard") List<List<InlineKeyboard>> inlineKeyboard) {
+  public KeyboardList(@JsonProperty("inline_keyboard") List<List<InlineKeyboardButton>> inlineKeyboard) {
     this.inline_keyboard = inlineKeyboard;
   }
 }
