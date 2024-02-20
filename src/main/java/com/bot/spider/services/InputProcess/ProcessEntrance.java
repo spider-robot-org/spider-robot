@@ -1,30 +1,29 @@
 package com.bot.spider.services.InputProcess;
 
-import com.bot.spider.dtos.TelegramMessageDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bot.spider.dtos.HandlingInputsDTO;
+import com.bot.spider.dtos.TelegramMessageDTO;
+
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class ProcessEntrance {
-  private final ExampleHandlingInputs exampleHandlingInputs;
-  private final ExampleButtonInput exampleButtonInput;
+	private final ExampleHandlingInputs exampleHandlingInputs;
+	private final ExampleButtonInput exampleButtonInput;
+	private final HandlingInputs handlingInputs;
 
-  @Autowired
-  public ProcessEntrance(ExampleHandlingInputs exampleHandlingInputs, ExampleButtonInput exampleButtonInput) {
-    this.exampleHandlingInputs = exampleHandlingInputs;
-    this.exampleButtonInput = exampleButtonInput;
-  }
+	public void process(TelegramMessageDTO body) {
+		var message = body.message();
+		var callbackQuery = body.callback_query();
 
-  public void process(TelegramMessageDTO body) {
-    if (body.message().isEmpty() && body.callback_query().isEmpty()) {
-      return;
-    }
+		if (message.isPresent()) {
+			handlingInputs.handle(new HandlingInputsDTO(body));
+			exampleHandlingInputs.handle(body);
 
-    if (body.message().isPresent()) {
-      exampleHandlingInputs.handle(body);
-
-    } else if (body.callback_query().isPresent()) {
-      exampleButtonInput.handle(body);
-    }
-  }
+		} else if (callbackQuery.isPresent()) {
+			exampleButtonInput.handle(body);
+		}
+	}
 }
