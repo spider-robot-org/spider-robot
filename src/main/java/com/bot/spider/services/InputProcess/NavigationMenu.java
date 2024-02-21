@@ -19,7 +19,7 @@ public class NavigationMenu {
 		Long chatId = dto.chatId();
 
 		String username = dto.username();
-		String messageText = "Olá " + username;
+		String messageText = String.format("Olá, %s! Por favor, utilize os botões abaixo para navegar entre as funcionalidades disponíveis.", username);
 
 		InlineKeyboardButton button = new InlineKeyboardButton("Texto 1", "opt1");
 		InlineKeyboardButton button2 = new InlineKeyboardButton("Texto 2", "opt2");
