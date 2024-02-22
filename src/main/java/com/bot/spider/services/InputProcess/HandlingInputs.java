@@ -3,7 +3,6 @@ package com.bot.spider.services.InputProcess;
 import org.springframework.stereotype.Service;
 
 import com.bot.spider.dtos.HandlingInputsDTO;
-import com.bot.spider.dtos.NavigationMenuDTO;
 import com.bot.spider.services.HttpClientService;
 import com.bot.spider.services.TelegramSenders;
 
@@ -13,7 +12,6 @@ import lombok.AllArgsConstructor;
 @Service
 public class HandlingInputs {
 	private HttpClientService httpClientService;
-	private NavigationMenu navigationMenu;
 	private TelegramSenders telegramSenders = new TelegramSenders(httpClientService);
 
 	public void handle(HandlingInputsDTO dto) {
@@ -25,7 +23,7 @@ public class HandlingInputs {
 			case "/typing" -> telegramSenders.sendHello(chatId);
 			case "/keyboard" -> {
 				if (dto.chat().isPresent()) {
-					String json = navigationMenu.createMenu(new NavigationMenuDTO(chatId, dto.chat().get().first_name()));
+					String json = NavigationMenu.buildInitialMenu(chatId, dto.chat().get().first_name());
 					telegramSenders.sendKeyboard(json);
 				}
 			}
