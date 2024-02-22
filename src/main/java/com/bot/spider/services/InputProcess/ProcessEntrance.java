@@ -1,6 +1,6 @@
 package com.bot.spider.services.InputProcess;
 
-import com.bot.spider.dtos.TelegramMessageDTO;
+import com.bot.spider.dtos.TelegramUpdate.TelegramUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,17 @@ public class ProcessEntrance {
     this.exampleButtonInput = exampleButtonInput;
   }
 
-  public void process(TelegramMessageDTO body) {
+  public void process(TelegramUpdateDTO body) {
     if (body.message().isEmpty() && body.callback_query().isEmpty()) {
       return;
     }
 
     if (body.message().isPresent()) {
+
+      if (body.message().get().forward_origin().isPresent()) {
+        //
+        return;
+      }
       exampleHandlingInputs.handle(body);
 
     } else if (body.callback_query().isPresent()) {
