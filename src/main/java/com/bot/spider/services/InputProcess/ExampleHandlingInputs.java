@@ -2,7 +2,7 @@ package com.bot.spider.services.InputProcess;
 
 import com.bot.spider.dtos.TelegramMessageDTO;
 import com.bot.spider.enums.TelegramChatAction;
-import com.bot.spider.libs.keyboard.CreateKeyboard;
+import com.bot.spider.factory.KeyboardFactory;
 import com.bot.spider.libs.keyboard.InlineKeyboard;
 import com.bot.spider.services.HttpClientService;
 import com.bot.spider.services.TelegramSenders;
@@ -49,7 +49,7 @@ public class ExampleHandlingInputs {
 
       List<List<InlineKeyboard>> inlineKeyboard = Arrays.asList(row1, row2);
 
-      String json = CreateKeyboard.newKeyboard(chatId, messageText, inlineKeyboard);
+      String json = KeyboardFactory.createKeyboard(chatId, messageText, inlineKeyboard);
       telegramSenders.sendKeyboard(json);
     }
   }
