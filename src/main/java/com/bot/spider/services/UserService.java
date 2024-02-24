@@ -13,6 +13,7 @@ import java.util.Map;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Objects;
 
 @Component
 public class UserService implements CommandLineRunner {
@@ -31,37 +32,41 @@ public class UserService implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args){
 
-            try {
-                List<Map<String, Object>> ownersFromFile = objectMapper.readValue(
-                        ownersJsonString,
-                        new TypeReference<List<Map<String, Object>>>() {
+                if (!ownersJsonString.isEmpty()){
+
+                    try {
+                        List<Map<String, Object>> ownersFromFile = objectMapper.readValue(
+                                ownersJsonString,
+                                new TypeReference<>() {
+                                }
+                        );
+
+                    for (Map<String, Object> ownerData : ownersFromFile) {
+                        String firstName = (String) ownerData.get("firstName");
+                        String lastName = (String) ownerData.get("lastName");
+                        String username = (String) ownerData.get("username");
+
+
+                        UserModel existingOwner = userRepository.findByUsername(username);
+
+                        if (Objects.isNull(existingOwner)) {
+                            UserModel newOwner = new UserModel();
+                            newOwner.setFirstName(firstName);
+                            newOwner.setLastName(lastName);
+                            newOwner.setUsername(username);
+                            newOwner.setRole(Role.OWNER);
+                            newOwner.setStatus(UserStatus.ACTIVE);
+                            userRepository.save(newOwner);
+
                         }
-                );
-
-                for (Map<String, Object> ownerData : ownersFromFile) {
-                    String firstName = (String) ownerData.get("firstName");
-                    String lastName = (String) ownerData.get("lastName");
-                    String username = (String) ownerData.get("username");
-
-
-                    UserModel existingOwner = userRepository.findByUsername(username);
-
-                    if (existingOwner == null) {
-
-                        UserModel newOwner = new UserModel();
-                        newOwner.setFirstName(firstName);
-                        newOwner.setLastName(lastName);
-                        newOwner.setUsername(username);
-                        newOwner.setRole(Role.OWNER);
-                        newOwner.setStatus(UserStatus.ACTIVE);
-                        userRepository.save(newOwner); // Salvar novo proprietário
-
                     }
+                    } catch (IOException e) {
+                        System.out.println("Error persisting data, error: " + e);
                 }
-            } catch (IOException e) {
-                System.out.println("Error persisting data, or no data to persist, error: " + e);
+
+
             }
 
     }
