@@ -9,5 +9,7 @@ public record MessageDTO(Long message_id,
                          String text,
                          Optional<ForwardOriginDTO> forward_origin,
                          Optional<ForwardFromDTO> forward_from,
-                         Optional<VideoDTO> video) {
+                         Optional<VideoDTO> video,
+                         Optional<VideoNoteDTO> video_note
+) {
 }
