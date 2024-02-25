@@ -1,11 +1,6 @@
 package com.bot.spider.models;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
-
 import com.bot.spider.enums.ActivationType;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -20,6 +15,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Data
 @Entity(name = "catalog")
 @AllArgsConstructor
@@ -31,8 +30,11 @@ public class CatalogModel {
 
     private String name;
 
-    @Column(name = "monthly_fee")
-    private BigDecimal monthlyFee;
+    @Column(name = "subscription_price")
+    private BigDecimal subscriptionPrice;
+
+    @Column(name = "max_slot")
+    private Integer maxSlot;
 
     @ElementCollection(targetClass = String.class)
     @Enumerated(EnumType.STRING)
