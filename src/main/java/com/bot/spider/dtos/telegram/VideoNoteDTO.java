@@ -1,4 +1,4 @@
-package com.bot.spider.dtos.telegram_update;
+package com.bot.spider.dtos.telegram;
 
 public record VideoNoteDTO(int duration,
                            int length,

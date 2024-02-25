@@ -1,6 +1,6 @@
-package com.bot.spider.dtos.telegram_update;
+package com.bot.spider.dtos.telegram;
 
-public record ForwardFromDTO(
+public record SenderUserDTO(
         Long id,
         boolean is_bot,
         String first_name,
