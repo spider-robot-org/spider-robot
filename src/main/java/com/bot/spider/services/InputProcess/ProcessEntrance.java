@@ -1,6 +1,6 @@
 package com.bot.spider.services.InputProcess;
 
-import com.bot.spider.dtos.TelegramUpdate.TelegramUpdateDTO;
+import com.bot.spider.dtos.telegram_update.TelegramUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
