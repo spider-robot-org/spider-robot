@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @Component
-public class UserService implements CommandLineRunner {
+public class InitializationService implements CommandLineRunner {
 
     private final UserRepository userRepository;
 
@@ -26,16 +26,14 @@ public class UserService implements CommandLineRunner {
     private String ownersJsonString;
 
     @Autowired
-    public UserService(UserRepository userRepository, ObjectMapper objectMapper) {
+    public InitializationService(UserRepository userRepository, ObjectMapper objectMapper) {
         this.userRepository = userRepository;
         this.objectMapper = objectMapper;
     }
 
     @Override
     public void run(String... args){
-
                 if (!ownersJsonString.isEmpty()){
-
                     try {
                         List<Map<String, Object>> ownersFromFile = objectMapper.readValue(
                                 ownersJsonString,
