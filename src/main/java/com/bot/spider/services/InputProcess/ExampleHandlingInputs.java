@@ -1,6 +1,6 @@
 package com.bot.spider.services.InputProcess;
 
-import com.bot.spider.dtos.telegram.TelegramUpdateDTO;
+import com.bot.spider.dtos.telegram.update.TelegramUpdateDTO;
 import com.bot.spider.enums.TelegramChatAction;
 import com.bot.spider.libs.keyboard.CreateKeyboard;
 import com.bot.spider.libs.keyboard.InlineKeyboard;

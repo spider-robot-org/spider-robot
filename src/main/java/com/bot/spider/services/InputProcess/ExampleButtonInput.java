@@ -1,7 +1,7 @@
 package com.bot.spider.services.InputProcess;
 
-import com.bot.spider.dtos.telegram.CallbackQueryDTO;
-import com.bot.spider.dtos.telegram.TelegramUpdateDTO;
+import com.bot.spider.dtos.telegram.update.CallbackQueryDTO;
+import com.bot.spider.dtos.telegram.update.TelegramUpdateDTO;
 import com.bot.spider.services.HttpClientService;
 import com.bot.spider.services.TelegramSenders;
 import org.springframework.stereotype.Service;

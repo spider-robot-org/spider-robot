@@ -1,4 +1,4 @@
-package com.bot.spider.dtos.telegram;
+package com.bot.spider.dtos.telegram.update;
 
 
 import java.util.List;

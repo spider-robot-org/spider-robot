@@ -1,6 +1,6 @@
 package com.bot.spider.controllers;
 
-import com.bot.spider.dtos.telegram.TelegramUpdateDTO;
+import com.bot.spider.dtos.telegram.update.TelegramUpdateDTO;
 import com.bot.spider.services.InputProcess.ProcessEntrance;
 import com.bot.spider.services.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
