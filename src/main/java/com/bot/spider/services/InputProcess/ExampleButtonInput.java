@@ -1,6 +1,7 @@
 package com.bot.spider.services.InputProcess;
 
-import com.bot.spider.dtos.TelegramMessageDTO;
+import com.bot.spider.dtos.telegram.update.CallbackQueryDTO;
+import com.bot.spider.dtos.telegram.update.TelegramUpdateDTO;
 import com.bot.spider.services.HttpClientService;
 import com.bot.spider.services.TelegramSenders;
 import org.springframework.stereotype.Service;
@@ -12,13 +13,14 @@ public class ExampleButtonInput {
   public ExampleButtonInput(HttpClientService httpClientService) {
     this.httpClientService = httpClientService;
   }
-  public void handle(TelegramMessageDTO body) {
+
+  public void handle(TelegramUpdateDTO body) {
     TelegramSenders telegramSenders = new TelegramSenders(httpClientService);
 
 
     assert body.callback_query().isPresent();
 
-    TelegramMessageDTO.CallbackQueryDTO callbackQuery = body.callback_query().get();
+    CallbackQueryDTO callbackQuery = body.callback_query().get();
 
     assert callbackQuery.message().chat().isPresent();
 
@@ -26,7 +28,7 @@ public class ExampleButtonInput {
     String data = callbackQuery.data();
 
     if (data.equals("one_piece_confirm")) {
-     telegramSenders.sendAnyMessage("Você escolheu a opção 1", chatId);
+      telegramSenders.sendAnyMessage("Você escolheu a opção 1", chatId);
     }
 
     if (data.equals("one_piece_confirm2")) {
