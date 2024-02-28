@@ -3,7 +3,7 @@ package com.bot.spider.services.InputProcess;
 import org.springframework.stereotype.Service;
 
 import com.bot.spider.dtos.HandlingInputsDTO;
-import com.bot.spider.dtos.TelegramMessageDTO;
+import com.bot.spider.dtos.telegram.update.TelegramUpdateDTO;
 
 import lombok.AllArgsConstructor;
 
@@ -13,15 +13,22 @@ public class ProcessEntrance {
 	private final ExampleButtonInput exampleButtonInput;
 	private final HandlingInputs handlingInputs;
 
-	public void process(TelegramMessageDTO body) {
-		var message = body.message();
-		var callbackQuery = body.callback_query();
+  public void process(TelegramUpdateDTO body) {
+    if (body.message().isEmpty() && body.callback_query().isEmpty()) {
+      return;
+    }
 
-		if (message.isPresent()) {
-			handlingInputs.handle(new HandlingInputsDTO(body));
+    if (body.message().isPresent()) {
 
-		} else if (callbackQuery.isPresent()) {
-			exampleButtonInput.handle(body);
-		}
-	}
+      if (body.message().get().forward_origin().isPresent()) {
+        //
+        return;
+      }
+	//   handlingInputs.handle(new HandlingInputsDTO(body));
+    //   exampleHandlingInputs.handle(body);
+
+    } else if (body.callback_query().isPresent()) {
+      exampleButtonInput.handle(body);
+    }
+  }
 }

@@ -1,6 +1,6 @@
 package com.bot.spider.services.InputProcess;
 
-import com.bot.spider.dtos.TelegramMessageDTO;
+import com.bot.spider.dtos.telegram.update.TelegramUpdateDTO;
 import com.bot.spider.enums.TelegramChatAction;
 import com.bot.spider.libs.keyboard.CreateKeyboard;
 import com.bot.spider.libs.keyboard.InlineKeyboard;
@@ -23,7 +23,7 @@ public class ExampleHandlingInputs {
     this.httpClientService = httpClientService;
   }
 
-  public void handle(TelegramMessageDTO body) {
+  public void handle(TelegramUpdateDTO body) {
     TelegramSenders telegramSenders = new TelegramSenders(httpClientService);
 
     assert body.message().isPresent();
