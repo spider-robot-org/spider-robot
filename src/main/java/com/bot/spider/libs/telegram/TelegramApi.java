@@ -30,6 +30,11 @@ public class TelegramApi   {
         String jsonBody = String.format("{\"file_id\":\"%s\"}", file_id);
         sendRequest(method, jsonBody);
     }
+
+    public void replyMessage(String json) {
+        String method = "editMessageText";
+        sendRequest(method, json);
+    }
     public void sendRequest(String method, String jsonBody) {
         try {
             httpClientService.sendPostRequest(method, jsonBody);

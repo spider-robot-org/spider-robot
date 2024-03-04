@@ -24,6 +24,7 @@ public class NavigationMenu {
 	private Long chatId;
 	private String message;
 	private List<InlineKeyboardRow> rows;
+	private Long messageId;
 
 	public static NavigationMenuBuilder builder() {
 		return new NavigationMenuBuilder();
@@ -33,12 +34,17 @@ public class NavigationMenu {
 		private Long chatId;
 		private String message;
 		private List<InlineKeyboardRow> rows = new ArrayList<>();
+		private Long messageId;
 
 		public NavigationMenuBuilder chatId(Long chatId) {
 			this.chatId = chatId;
 			return this;
 		}
 
+		public NavigationMenuBuilder messageId(Long messageId) {
+			this.messageId = messageId;
+			return this;
+		}
 		public NavigationMenuBuilder message(String message) {
 			this.message = message;
 			return this;
@@ -52,20 +58,24 @@ public class NavigationMenu {
 		}
 
 		public NavigationMenuBuilder button(int line, String text, String data) {
-			if (line < rows.size()) {
-				rows.get(line).buttons().add(new InlineKeyboardButton(text, data));
+			int zeroBasedLine = line - 1;
+			if (zeroBasedLine < rows.size()) {
+				rows.get(zeroBasedLine).buttons().add(new InlineKeyboardButton(text, data));
 			}
 			return this;
 		}
 
 		public NavigationMenu build() {
-			return new NavigationMenu(chatId, message, rows);
+			return new NavigationMenu(chatId, message, rows, messageId);
 		}
 	}
 
 	public String buildJson() {
 		InlineKeyboard inlineKeyboard = new InlineKeyboard(this.rows);
-		return CreateKeyboard.newKeyboard(this.chatId, this.message, inlineKeyboard);
+		if (messageId != null) {
+			return CreateKeyboard.newKeyboard(chatId, messageId, message, inlineKeyboard);
+		}
+		return CreateKeyboard.newKeyboard(chatId, message, inlineKeyboard);
 	}
 
 	public static String buildInitialMenu(Long chatId, String firstName) {
@@ -75,8 +85,8 @@ public class NavigationMenu {
 						"Olá %s! Por favor, utilize os botões abaixo para navegar entre as funcionalidades disponíveis."
 								.formatted(firstName))
 				.rows(2)
-				.button(0, "Opção 1", "opt1")
-				.button(1, "Opção 2", "opt2")
+				.button(1, "Opção 1", "opt1")
+				.button(2, "Opção 2", "one_piece_confirm")
 				.build()
 				.buildJson();
 	}

@@ -21,4 +21,20 @@ public class CreateKeyboard {
       return null;
     }
   }
+
+  public static String newKeyboard(Long chatId, Long messageId, String messageText, InlineKeyboard inlineKeyboard) {
+    KeyboardList keyboardList = new KeyboardList(inlineKeyboard);
+    ReplyMessage message = new ReplyMessage(chatId, messageId, messageText, keyboardList);
+
+    try {
+      ObjectMapper objectMapper = new ObjectMapper();
+      String jsonString = objectMapper.writeValueAsString(message);
+
+      return jsonString;
+
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
 }

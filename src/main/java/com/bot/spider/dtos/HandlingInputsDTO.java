@@ -2,10 +2,11 @@ package com.bot.spider.dtos;
 
 import java.util.Optional;
 
-import com.bot.spider.dtos.TelegramMessageDTO.ChatDTO;
+import com.bot.spider.dtos.telegram.update.ChatDTO;
+import com.bot.spider.dtos.telegram.update.TelegramUpdateDTO;
 
 public record HandlingInputsDTO(Long chatId, String text, Optional<ChatDTO> chat) {
-	public HandlingInputsDTO(TelegramMessageDTO body) {
+	public HandlingInputsDTO(TelegramUpdateDTO body) {
 		this(body.message().get().chat().get().id(), body.message().get().text(), body.message().get().chat());
 	}
 }

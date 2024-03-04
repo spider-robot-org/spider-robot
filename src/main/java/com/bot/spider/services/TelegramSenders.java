@@ -39,4 +39,8 @@ public class TelegramSenders {
     telegramApi.sendMessage(jsonBody);
   }
 
+  public void sendReplyMessage(String json) {
+    telegramApi.replyMessage(json);
+  }
+
 }
