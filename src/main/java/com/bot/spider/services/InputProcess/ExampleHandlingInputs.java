@@ -52,6 +52,8 @@ public class ExampleHandlingInputs {
       InlineKeyboard inlineKeyboard = new InlineKeyboard(Arrays.asList(row1, row2));
 
       String json = CreateKeyboard.newKeyboard(chatId, messageText, inlineKeyboard);
+      UserMenuManager userMenuManager = UserMenuManager.getInstance();
+      userMenuManager.push(chatId, new MenuState(json, 0L));
       telegramSenders.sendKeyboard(json);
     }
   }

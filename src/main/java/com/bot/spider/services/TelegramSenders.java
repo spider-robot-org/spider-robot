@@ -40,6 +40,7 @@ public class TelegramSenders {
   }
 
   public void sendReplyMessage(String json) {
+    System.out.println("Mensagem enviada: " + json);
     telegramApi.replyMessage(json);
   }
 

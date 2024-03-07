@@ -24,6 +24,8 @@ public class HandlingInputs {
 			case "/keyboard" -> {
 				if (dto.chat().isPresent()) {
 					String json = NavigationMenu.buildInitialMenu(chatId, dto.chat().get().first_name());
+					UserMenuManager userMenuManager = UserMenuManager.getInstance();
+					userMenuManager.push(chatId, new MenuState(json, null));
 					telegramSenders.sendKeyboard(json);
 				}
 			}

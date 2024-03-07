@@ -1,19 +1,19 @@
 package com.bot.spider.services.InputProcess;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.bot.spider.libs.keyboard.CreateKeyboard;
 import com.bot.spider.libs.keyboard.InlineKeyboard;
 import com.bot.spider.libs.keyboard.InlineKeyboardButton;
 import com.bot.spider.libs.keyboard.InlineKeyboardRow;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -26,6 +26,35 @@ public class NavigationMenu {
 	private List<InlineKeyboardRow> rows;
 	private Long messageId;
 
+	public NavigationMenu(MessageKeyboard messageKeyboard) {
+		this.chatId = messageKeyboard.chatId();
+		this.message = messageKeyboard.text();
+		this.messageId = messageKeyboard.messageId();
+		this.rows = new ArrayList<>();
+		for (List<InlineKeyboardButton> buttons : messageKeyboard.replyMarkup().inlineKeyboard()) {
+			this.rows.add(new InlineKeyboardRow(buttons));
+		}
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+		NavigationMenu that = (NavigationMenu) obj;
+		return chatId == that.chatId &&
+						message.equals(that.message) &&
+						messageId.equals(that.messageId);
+	}
+
+	public static NavigationMenu fromJson(String json) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			var message = objectMapper.readValue(json, MessageKeyboard.class);
+			return new NavigationMenu(message);
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to convert JSON to NavigationMenu", e);
+		}
+	}
 	public static NavigationMenuBuilder builder() {
 		return new NavigationMenuBuilder();
 	}
@@ -33,7 +62,7 @@ public class NavigationMenu {
 	public static class NavigationMenuBuilder {
 		private Long chatId;
 		private String message;
-		private List<InlineKeyboardRow> rows = new ArrayList<>();
+		private final List<InlineKeyboardRow> rows = new ArrayList<>();
 		private Long messageId;
 
 		public NavigationMenuBuilder chatId(Long chatId) {
@@ -65,6 +94,13 @@ public class NavigationMenu {
 			return this;
 		}
 
+		public NavigationMenuBuilder backButton() {
+			if (!rows.isEmpty()) {
+				rows.get(rows.size() - 1).buttons().add(new InlineKeyboardButton("Voltar", "back"));
+			}
+			return this;
+		}
+
 		public NavigationMenu build() {
 			return new NavigationMenu(chatId, message, rows, messageId);
 		}
@@ -86,7 +122,7 @@ public class NavigationMenu {
 								.formatted(firstName))
 				.rows(2)
 				.button(1, "Opção 1", "opt1")
-				.button(2, "Opção 2", "one_piece_confirm")
+				.button(2, "Opção 2", "opt2")
 				.build()
 				.buildJson();
 	}
