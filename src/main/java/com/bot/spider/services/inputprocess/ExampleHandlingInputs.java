@@ -1,8 +1,8 @@
-package com.bot.spider.services.InputProcess;
+package com.bot.spider.services.inputprocess;
 
 import com.bot.spider.dtos.telegram.update.TelegramUpdateDTO;
 import com.bot.spider.enums.TelegramChatAction;
-import com.bot.spider.libs.keyboard.CreateKeyboard;
+import com.bot.spider.factory.KeyboardFactory;
 import com.bot.spider.libs.keyboard.InlineKeyboard;
 import com.bot.spider.services.HttpClientService;
 import com.bot.spider.services.TelegramSenders;
@@ -21,14 +21,8 @@ public class ExampleHandlingInputs {
     this.httpClientService = httpClientService;
   }
 
-  public void handle(TelegramUpdateDTO body) {
+  public void handle(Long chatId, String text) {
     TelegramSenders telegramSenders = new TelegramSenders(httpClientService);
-
-    assert body.message().isPresent();
-    assert body.message().get().chat().isPresent();
-
-    Long chatId = body.message().get().chat().get().id();
-    String text = body.message().get().text();
 
     if (text.equals("/start")) {
       telegramSenders.sendHello(chatId);
@@ -38,20 +32,19 @@ public class ExampleHandlingInputs {
       telegramSenders.sendChatAction(chatId, TelegramChatAction.UPLOAD_AUDIO);
     }
 
-    if (text.equals(("/keyboard"))) {
+    if (text.equals("/keyboard")) {
       String messageText = "Escolha uma opção";
-      InlineKeyboard button1 = new InlineKeyboard("Texto 1", "one_piece_confirm");
-      InlineKeyboard button3 = new InlineKeyboard("Texto 3", "one_piece_confirm2");
-      InlineKeyboard button2 = new InlineKeyboard("Texto 2", "one_piece_not_confirm");
+      InlineKeyboard button1 = new InlineKeyboard("Texto 1", "option_one");
+      InlineKeyboard button2 = new InlineKeyboard("Texto 3", "option_two");
+      InlineKeyboard button3 = new InlineKeyboard("Texto 2", "option_three");
 
-      List<InlineKeyboard> row1 = Arrays.asList(button1, button3);
-      List<InlineKeyboard> row2 = List.of(button2);
+      List<InlineKeyboard> row1 = Arrays.asList(button1, button2);
+      List<InlineKeyboard> row2 = List.of(button3);
 
       List<List<InlineKeyboard>> inlineKeyboard = Arrays.asList(row1, row2);
 
-      String json = CreateKeyboard.newKeyboard(chatId, messageText, inlineKeyboard);
+      String json = KeyboardFactory.createKeyboard(chatId, messageText, inlineKeyboard);
       telegramSenders.sendKeyboard(json);
     }
   }
-
 }
